@@ -1,5 +1,5 @@
-﻿/**
- * Custom scripts repository (MVP.md Â§7.2).
+/**
+ * Custom scripts repository (MVP.md §7.2).
  *
  * SERVER ONLY.
  *

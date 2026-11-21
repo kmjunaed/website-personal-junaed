@@ -119,7 +119,7 @@ export function Header({
           aria-label={open ? "Close navigation" : "Open navigation"}
           className="grid size-11 place-items-center rounded-xl text-2xl text-ink transition-colors hover:bg-violet-50 lg:hidden"
         >
-          <span aria-hidden="true">{open ? "âœ•" : "â˜°"}</span>
+          <span aria-hidden="true">{open ? "✕" : "☰"}</span>
         </button>
       </div>
 

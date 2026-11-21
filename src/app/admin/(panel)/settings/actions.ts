@@ -22,7 +22,7 @@ import {
  *  - the audit log records which keys changed, never the values (they can
  *    contain an email address)
  *  - `revalidateTag("settings")` is what makes the change visible on the
- *    public site â€” without it the cached read would serve the old value
+ *    public site — without it the cached read would serve the old value
  */
 
 export type SettingsState = {

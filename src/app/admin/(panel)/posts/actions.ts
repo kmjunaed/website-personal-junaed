@@ -24,7 +24,7 @@ import {
 import { slugTaken } from "@/lib/posts/repository";
 
 /**
- * Post write path (MVP.md Â§4.1).
+ * Post write path (MVP.md §4.1).
  *
  * Notes on the choices here:
  *
@@ -317,7 +317,7 @@ export async function savePost(
       })
       .where(eq(postsTable.id, postId));
 
-    // Replace the tag set wholesale â€” simplest correct behaviour.
+    // Replace the tag set wholesale — simplest correct behaviour.
     await db.delete(postTags).where(eq(postTags.postId, postId));
     const tagIds = await resolveTags(tagNames);
     if (tagIds.length > 0) {
@@ -388,7 +388,7 @@ export async function setPostStatus(
   redirect(`${await getAdminBase()}/posts`);
 }
 
-/** Soft delete â€” the Trash keeps it for 30 days (MVP.md Â§4.2). */
+/** Soft delete — the Trash keeps it for 30 days (MVP.md §4.2). */
 export async function deletePost(postId: number): Promise<void> {
   const user = await requireRoleOrThrow("editor");
 

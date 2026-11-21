@@ -9,7 +9,7 @@ import {
 } from "./ip";
 
 /**
- * IP matching tests (MVP.md Â§8.2).
+ * IP matching tests (MVP.md §8.2).
  *
  * The cases that matter are the ones where a plausible implementation is
  * quietly wrong: leading-zero octets, a CIDR that is off by one bit, an

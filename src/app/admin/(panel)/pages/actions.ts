@@ -10,7 +10,7 @@ import { pageDefinition } from "@/lib/pages";
 import { requireRoleOrThrow, UnauthorizedError } from "@/lib/rbac";
 
 /**
- * Page content write path (MVP.md Â§3.3).
+ * Page content write path (MVP.md §3.3).
  *
  * Same rules as the settings action: role re-checked here, every field
  * validated against its definition, audit records the page and status only,

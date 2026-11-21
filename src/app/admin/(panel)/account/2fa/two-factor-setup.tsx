@@ -46,7 +46,7 @@ export function TwoFactorSetup({ otpauthUrl }: { otpauthUrl: string }) {
     return (
       <div className="rounded-[18px] border border-line bg-white p-6">
         <p className="flex items-center gap-2 text-sm font-bold text-[#1f9d63]">
-          <span aria-hidden="true">âœ“</span> {state.message}
+          <span aria-hidden="true">✓</span> {state.message}
         </p>
 
         <div className="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4">
@@ -99,7 +99,7 @@ export function TwoFactorSetup({ otpauthUrl }: { otpauthUrl: string }) {
               <div className="grid size-[220px] place-items-center text-center text-xs text-muted">
                 {qrError
                   ? "Could not render the QR code. Use the manual key below."
-                  : "Generating QR codeâ€¦"}
+                  : "Generating QR code…"}
               </div>
             )}
           </div>
@@ -137,7 +137,7 @@ export function TwoFactorSetup({ otpauthUrl }: { otpauthUrl: string }) {
               disabled={pending}
               className="flex min-h-11 w-full items-center justify-center rounded-[11px] bg-violet-950 px-5 text-sm font-bold text-white transition hover:bg-violet-700 disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
             >
-              {pending ? "Verifyingâ€¦" : "Verify and enable"}
+              {pending ? "Verifying…" : "Verify and enable"}
             </button>
           </form>
         </li>

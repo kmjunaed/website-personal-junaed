@@ -1,7 +1,7 @@
 ﻿/**
- * IP and CIDR matching â€” pure logic, no I/O.
+ * IP and CIDR matching — pure logic, no I/O.
  *
- * MVP.md Â§8.2. The block list stores single addresses and CIDR ranges; this
+ * MVP.md §8.2. The block list stores single addresses and CIDR ranges; this
  * module decides whether a given address falls inside one.
  *
  * Why hand-rolled rather than a dependency: the whole job is parsing four
@@ -52,7 +52,7 @@ function parseIpv4(input: string): bigint | null {
 
 /** Expand an IPv6 address (including `::` shorthand) to a 128-bit value. */
 function parseIpv6(input: string): bigint | null {
-  // Strip a zone index (`fe80::1%eth0`) â€” it is not part of the address.
+  // Strip a zone index (`fe80::1%eth0`) — it is not part of the address.
   const address = input.split("%")[0] ?? "";
   if (address === "") return null;
 

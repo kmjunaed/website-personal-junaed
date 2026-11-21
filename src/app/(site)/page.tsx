@@ -54,7 +54,7 @@ function HeroVisual({ imageUrl, imageAlt }: { imageUrl: string | null; imageAlt:
       {/* Soft white orb, bottom left */}
       <div className="absolute -bottom-[55px] -left-[75px] size-[220px] rounded-full bg-white/55" />
 
-      {/* Portrait panel â€” violet base with a white sheen, as in the original */}
+      {/* Portrait panel — violet base with a white sheen, as in the original */}
       <div className="absolute inset-x-[35px] top-[35px] bottom-0 z-1 flex items-end justify-center overflow-hidden rounded-t-[25px] bg-[linear-gradient(150deg,rgb(255_255_255/0.6),rgb(255_255_255/0.13)),linear-gradient(145deg,#4f22b5,#9e8cf9)] lg:inset-x-[48px] lg:top-[42px]">
         <div className="relative h-[76%] w-[65%] rounded-t-[46%] rounded-b-[12%] bg-linear-145 from-[#251b40] to-[#4d3a72] drop-shadow-[0_15px_20px_rgb(39_17_100/0.2)]">
           <div className="absolute -top-[25%] left-[27%] aspect-square w-[46%] rounded-full bg-linear-140 from-[#d8c5b4] to-[#b58d7c]" />
@@ -71,12 +71,12 @@ function HeroVisual({ imageUrl, imageAlt }: { imageUrl: string | null; imageAlt:
 
       <div className="absolute right-[12px] bottom-[15px] z-3 flex items-center gap-3 rounded-2xl border border-white/65 bg-white px-[18px] py-[15px] shadow-float lg:right-[22px] lg:bottom-[28px]">
         <span className="grid size-9 place-items-center rounded-xl bg-violet-50 text-lg text-violet-700">
-          âœ¦
+          ✦
         </span>
         <div>
           <strong className="block text-sm font-bold">Digital growth</strong>
           <small className="text-[11px] text-muted">
-            Design Â· Strategy Â· Results
+            Design · Strategy · Results
           </small>
         </div>
       </div>
@@ -361,7 +361,7 @@ export default async function HomePage() {
               href="/about"
               className="mt-7 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-violet-300 hover:text-white"
             >
-              More about me <span aria-hidden="true">â†’</span>
+              More about me <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
         </div>

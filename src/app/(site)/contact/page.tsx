@@ -69,7 +69,7 @@ export default async function ContactPage() {
                 aria-hidden="true"
                 className="grid size-10 shrink-0 place-items-center rounded-[13px] bg-violet-50 text-lg text-violet-700"
               >
-                âœ‰
+                ✉
               </span>
               <span>
                 <small className="mb-0.5 block text-[13px] text-muted">
@@ -84,7 +84,7 @@ export default async function ContactPage() {
                 aria-hidden="true"
                 className="grid size-10 shrink-0 place-items-center rounded-[13px] bg-violet-50 text-lg text-violet-700"
               >
-                â±
+                ⏱
               </span>
               <span>
                 <small className="mb-0.5 block text-[13px] text-muted">

@@ -1,8 +1,8 @@
 ﻿/**
- * Editable page content â€” typed blocks, defaults and cached reads.
+ * Editable page content — typed blocks, defaults and cached reads.
  *
- * MVP.md Â§3.3: each page is built from typed sections, edited with a form per
- * section, never free-form HTML. That is the whole point â€” the design cannot
+ * MVP.md §3.3: each page is built from typed sections, edited with a form per
+ * section, never free-form HTML. That is the whole point — the design cannot
  * break because an editor cannot reach the markup.
  *
  * Shape:
@@ -12,7 +12,7 @@
  * Why a flat object and not a nested tree: a nested block editor is a Phase 4
  * problem (posts need it, pages do not). Pages have a fixed set of slots. Flat
  * keys mean the admin form is generated, validation is one loop, and a partial
- * row still renders â€” every missing field falls back to its default.
+ * row still renders — every missing field falls back to its default.
  *
  * Split out of lib/pages.ts on purpose (B1): a "use client" form needs the
  * field definitions and types, but importing lib/pages.ts would drag `@/db`
@@ -80,7 +80,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "heroHeading",
         label: "Hero heading",
         kind: "text",
-        default: "Letâ€™s make your brand",
+        default: "Let's make your brand",
         maxLength: 120,
       },
       {
@@ -197,7 +197,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "aboutHeading",
         label: "About heading",
         kind: "text",
-        default: "Hey, Iâ€™m Junaed.",
+        default: "Hey, I'm Junaed.",
         maxLength: 120,
       },
       {
@@ -212,7 +212,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         label: "About paragraph",
         kind: "textarea",
         default:
-          "Iâ€™m a digital marketer and creative problem-solver who enjoys helping brands make sense of the online world. My work brings together strategy, creativity, and practical execution, so businesses can build a presence theyâ€™re proud of and grow with confidence.",
+          "I'm a digital marketer and creative problem-solver who enjoys helping brands make sense of the online world. My work brings together strategy, creativity, and practical execution, so businesses can build a presence they're proud of and grow with confidence.",
         maxLength: 600,
       },
       {
@@ -226,7 +226,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "ctaHeading",
         label: "CTA heading",
         kind: "text",
-        default: "Letâ€™s build something great together.",
+        default: "Let's build something great together.",
         maxLength: 140,
       },
       {
@@ -234,7 +234,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         label: "CTA paragraph",
         kind: "textarea",
         default:
-          "Have a project, a business idea, or a challenge you want to solve? Tell me a little about it and letâ€™s see what we can make happen.",
+          "Have a project, a business idea, or a challenge you want to solve? Tell me a little about it and let's see what we can make happen.",
         maxLength: 400,
       },
       {
@@ -263,7 +263,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "heading",
         label: "Heading",
         kind: "text",
-        default: "Hey, Iâ€™m Junaed. I make digital work",
+        default: "Hey, I'm Junaed. I make digital work",
         maxLength: 140,
       },
       {
@@ -275,15 +275,15 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
       },
       {
         key: "story1",
-        label: "Story â€” paragraph 1",
+        label: "Story — paragraph 1",
         kind: "textarea",
         default:
-          "Iâ€™m a digital marketer and creative problem-solver who enjoys helping brands make sense of the online world. My work brings together strategy, creativity, and practical execution, so businesses can build a presence theyâ€™re proud of and grow with confidence.",
+          "I'm a digital marketer and creative problem-solver who enjoys helping brands make sense of the online world. My work brings together strategy, creativity, and practical execution, so businesses can build a presence they're proud of and grow with confidence.",
         maxLength: 700,
       },
       {
         key: "story2",
-        label: "Story â€” paragraph 2",
+        label: "Story — paragraph 2",
         kind: "textarea",
         default:
           "I have spent most of my working life at the point where marketing meets design and engineering: campaigns that need a landing page, sites that need to rank, brands that need to look like they mean it. That overlap is where most projects quietly succeed or fail, and it is where I am most useful.",
@@ -291,7 +291,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
       },
       {
         key: "story3",
-        label: "Story â€” paragraph 3",
+        label: "Story — paragraph 3",
         kind: "textarea",
         default:
           "I work with a small number of clients at a time, on purpose. It means I can be honest about scope, direct about what will not work, and still be around when the thing launches.",
@@ -339,7 +339,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "heading",
         label: "Heading",
         kind: "text",
-        default: "Letâ€™s talk about your next project.",
+        default: "Let's talk about your next project.",
         maxLength: 140,
       },
       {
@@ -347,7 +347,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         label: "Intro paragraph",
         kind: "textarea",
         default:
-          "Have a question or looking for the right support? Send me a message. Iâ€™d love to hear what youâ€™re working on.",
+          "Have a question or looking for the right support? Send me a message. I'd love to hear what you're working on.",
         maxLength: 400,
       },
       {
