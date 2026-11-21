@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth/session";
+import { getAdminBase } from "@/lib/admin-path";
 
 /**
  * Admin host root.
@@ -11,5 +12,6 @@ import { getSession } from "@/lib/auth/session";
  */
 export default async function AdminIndexPage() {
   const session = await getSession();
-  redirect(session ? "/dashboard" : "/login");
+  const base = await getAdminBase();
+  redirect(session ? `${base}/dashboard` : `${base}/login`);
 }

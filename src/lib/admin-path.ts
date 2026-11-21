@@ -18,13 +18,8 @@ export async function getAdminBase(): Promise<string> {
   const host = (await headers()).get("host") ?? "";
   const hostname = host.split(":")[0]?.toLowerCase() ?? "";
 
-  const isLoopback =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "[::1]" ||
-    hostname === "::1";
-
-  return isLoopback ? "/admin" : "";
+  const isAdminHost = hostname.startsWith("admin.");
+  return isAdminHost ? "" : "/admin";
 }
 
 /** Prefix an admin path for the current host. */

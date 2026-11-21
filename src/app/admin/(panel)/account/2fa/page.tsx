@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { getSession } from "@/lib/auth/session";
+import { getAdminBase } from "@/lib/admin-path";
 import { createTotpEnrolment, otpauthUrlFor } from "@/lib/auth/totp";
 import { TwoFactorSetup } from "./two-factor-setup";
 
@@ -23,7 +24,8 @@ export const metadata: Metadata = { title: "Two-factor authentication" };
  */
 export default async function TwoFactorPage() {
   const session = await getSession();
-  if (!session) redirect("/login");
+  const base = await getAdminBase();
+  if (!session) redirect(`${base}/login`);
 
   const rows = await db
     .select({
@@ -36,7 +38,7 @@ export default async function TwoFactorPage() {
     .limit(1);
 
   const record = rows[0];
-  if (!record) redirect("/login");
+  if (!record) redirect(`${base}/login`);
 
   if (record.totpEnabledAt) {
     return (

@@ -104,6 +104,12 @@ describe("proxy — local development", () => {
     expect((await proxy(request("/admin/login", "127.0.0.1:3000"))).status).toBe(200);
   });
 
+  it("serves /admin on .vercel.app deployment domains", async () => {
+    const response = await proxy(request("/admin/login", "website-personal-junaed.vercel.app"));
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-robots-tag")).toContain("noindex");
+  });
+
   it("still 404s /admin on a real public domain", async () => {
     expect((await proxy(request("/admin", ROOT))).status).toBe(404);
   });

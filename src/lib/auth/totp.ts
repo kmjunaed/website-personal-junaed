@@ -138,7 +138,8 @@ export async function consumeRecoveryCode(
   return null;
 }
 
-/** Roles for which 2FA is not optional. */
-export function isTwoFactorMandatory(role: string): boolean {
-  return role === "owner" || role === "admin";
+/** Roles for which 2FA is not optional. (Turned off per user request) */
+export function isTwoFactorMandatory(role?: string): boolean {
+  void role;
+  return false;
 }

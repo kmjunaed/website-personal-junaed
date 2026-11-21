@@ -48,6 +48,12 @@ function isLoopbackHost(host: string | null): boolean {
   );
 }
 
+function isAllowedAdminDirectHost(host: string | null): boolean {
+  if (!host) return false;
+  const hostname = host.split(":")[0]?.toLowerCase() ?? "";
+  return isLoopbackHost(host) || hostname.endsWith(".vercel.app");
+}
+
 /** Paths that must stay reachable on the admin host without rewriting. */
 const ADMIN_PASSTHROUGH = ["/_next", "/favicon.ico", "/robots.txt", "/api"];
 
@@ -148,10 +154,10 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/admin/") ||
     pathname.startsWith("/api/admin")
   ) {
-    // Local development exception: there is no admin subdomain on localhost,
-    // so /admin is the only way to open the panel. Still noindexed, because
-    // the header costs nothing and keeps dev and prod behaviour aligned.
-    if (isLoopbackHost(host)) {
+    // Development and preview exception: on localhost or preview/deployment domains
+    // (.vercel.app), /admin is accessible directly without an admin subdomain.
+    // Always noindexed to keep search engines out.
+    if (isAllowedAdminDirectHost(host)) {
       const response = NextResponse.next();
       response.headers.set(
         "x-robots-tag",

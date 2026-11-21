@@ -9,17 +9,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Same host logic as the login action: loopback has no admin subdomain. */
+/** Same host logic as the login action: loopback and vercel domains have no admin subdomain. */
 async function dashboardPath(): Promise<string> {
   const host = (await headers()).get("host") ?? "";
   const hostname = host.split(":")[0]?.toLowerCase() ?? "";
   const isAdminHost = hostname.startsWith("admin.");
-  const isLoopback =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "[::1]" ||
-    hostname === "::1";
-  return isAdminHost || !isLoopback ? "/dashboard" : "/admin/dashboard";
+  return isAdminHost ? "/dashboard" : "/admin/dashboard";
 }
 
 export default async function LoginPage() {

@@ -232,27 +232,9 @@ export async function login(
 
   /* ---------------------------- second factor ---------------------------- */
 
-  const requiresTotp = Boolean(user.totpSecret) || isTwoFactorMandatory(user.role);
+  const requiresTotp = Boolean(user.totpSecret) && isTwoFactorMandatory(user.role);
 
-  if (requiresTotp) {
-    if (!user.totpSecret) {
-      // Password was right, but this account must enrol 2FA before it can be
-      // used. Do not create a session.
-      await logActivity({
-        userId: user.id,
-        action: ACTIONS.loginFailed,
-        entity: "user",
-        entityId: user.id,
-        meta: { reason: "totp_not_enrolled" },
-        ipHash: meta.ipHash,
-      });
-      return {
-        status: "error",
-        message:
-          "This account requires two-factor authentication but has not set it up. Ask the owner to reset 2FA for this account.",
-      };
-    }
-
+  if (requiresTotp && user.totpSecret) {
     if (!totp) {
       // Password accepted; ask for the code. No session yet.
       return { status: "totp_required", email };
@@ -306,13 +288,8 @@ export async function login(
   const host = (await headers()).get("host") ?? "";
   const hostname = host.split(":")[0]?.toLowerCase() ?? "";
   const isAdminHost = hostname.startsWith("admin.");
-  const isLoopback =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "[::1]" ||
-    hostname === "::1";
 
-  redirect(isAdminHost || !isLoopback ? "/dashboard" : "/admin/dashboard");
+  redirect(isAdminHost ? "/dashboard" : "/admin/dashboard");
 }
 
 /** Logout: revoke this session and clear the cookie. */
@@ -334,15 +311,10 @@ export async function logout(): Promise<void> {
 
   await clearSessionCookie();
 
-  // Same loopback caveat as login: /login only resolves on the admin host.
+  // Same host caveat as login: /login only resolves on the admin host.
   const host = (await headers()).get("host") ?? "";
   const hostname = host.split(":")[0]?.toLowerCase() ?? "";
   const isAdminHost = hostname.startsWith("admin.");
-  const isLoopback =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "[::1]" ||
-    hostname === "::1";
 
-  redirect(isAdminHost || !isLoopback ? "/login" : "/admin/login");
+  redirect(isAdminHost ? "/login" : "/admin/login");
 }
