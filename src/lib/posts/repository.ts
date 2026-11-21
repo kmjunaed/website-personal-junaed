@@ -82,55 +82,7 @@ function coverJoin() {
 /** Public list, cached. Tagged `posts` so a publish invalidates it. */
 export const listPublishedPosts = unstable_cache(
   async (limit = 50): Promise<PostListItem[]> => {
-    const rows = await db
-      .select({
-        id: postsTable.id,
-        title: postsTable.title,
-        slug: postsTable.slug,
-        excerpt: postsTable.excerpt,
-        status: postsTable.status,
-        publishedAt: postsTable.publishedAt,
-        readingMinutes: postsTable.readingMinutes,
-        wordCount: postsTable.wordCount,
-        updatedAt: postsTable.updatedAt,
-        content: postsTable.content,
-        categoryName: categories.name,
-        categorySlug: categories.slug,
-        ...coverJoin(),
-      })
-      .from(postsTable)
-      .leftJoin(categories, eq(postsTable.categoryId, categories.id))
-      .leftJoin(media, eq(postsTable.coverMediaId, media.id))
-      .where(publicCondition())
-      .orderBy(desc(postsTable.publishedAt))
-      .limit(limit);
-
-    return rows.map((row) => ({
-      id: row.id,
-      title: row.title,
-      slug: row.slug,
-      excerpt:
-        row.excerpt?.trim() ||
-        autoExcerpt(isSafeDoc(row.content) ? row.content : null),
-      status: row.status as PostStatus,
-      categoryName: row.categoryName,
-      categorySlug: row.categorySlug,
-      publishedAt: row.publishedAt ? row.publishedAt.toISOString() : null,
-      readingMinutes: row.readingMinutes ?? 0,
-      wordCount: row.wordCount ?? 0,
-      coverUrl: row.coverUrl,
-      coverAlt: row.coverAlt?.trim() ?? "",
-      updatedAt: row.updatedAt.toISOString(),
-    }));
-  },
-  ["published-posts"],
-  { tags: ["posts"], revalidate: false },
-);
-
-/** Public single post by slug, cached per slug. */
-export function getPublishedPost(slug: string) {
-  return unstable_cache(
-    async (): Promise<PostDetail | null> => {
+    try {
       const rows = await db
         .select({
           id: postsTable.id,
@@ -143,39 +95,24 @@ export function getPublishedPost(slug: string) {
           wordCount: postsTable.wordCount,
           updatedAt: postsTable.updatedAt,
           content: postsTable.content,
-          seoTitle: postsTable.seoTitle,
-          seoDescription: postsTable.seoDescription,
-          canonicalUrl: postsTable.canonicalUrl,
-          noindex: postsTable.noindex,
           categoryName: categories.name,
           categorySlug: categories.slug,
-          authorName: users.name,
           ...coverJoin(),
         })
         .from(postsTable)
         .leftJoin(categories, eq(postsTable.categoryId, categories.id))
-        .leftJoin(users, eq(postsTable.authorId, users.id))
         .leftJoin(media, eq(postsTable.coverMediaId, media.id))
-        .where(and(eq(postsTable.slug, slug), publicCondition()))
-        .limit(1);
+        .where(publicCondition())
+        .orderBy(desc(postsTable.publishedAt))
+        .limit(limit);
 
-      const row = rows[0];
-      if (!row) return null;
-
-      const tagRows = await db
-        .select({ name: tags.name })
-        .from(postTags)
-        .innerJoin(tags, eq(postTags.tagId, tags.id))
-        .where(eq(postTags.postId, row.id));
-
-      const doc = isSafeDoc(row.content) ? pruneDoc(row.content) : { type: "doc" as const };
-
-      return {
+      return rows.map((row) => ({
         id: row.id,
         title: row.title,
         slug: row.slug,
         excerpt:
-          row.excerpt?.trim() || autoExcerpt(doc),
+          row.excerpt?.trim() ||
+          autoExcerpt(isSafeDoc(row.content) ? row.content : null),
         status: row.status as PostStatus,
         categoryName: row.categoryName,
         categorySlug: row.categorySlug,
@@ -185,14 +122,85 @@ export function getPublishedPost(slug: string) {
         coverUrl: row.coverUrl,
         coverAlt: row.coverAlt?.trim() ?? "",
         updatedAt: row.updatedAt.toISOString(),
-        content: doc,
-        seoTitle: row.seoTitle ?? "",
-        seoDescription: row.seoDescription ?? "",
-        canonicalUrl: row.canonicalUrl ?? "",
-        noindex: row.noindex,
-        authorName: row.authorName,
-        tagNames: tagRows.map((tag) => tag.name),
-      };
+      }));
+    } catch {
+      return [];
+    }
+  },
+  ["published-posts"],
+  { tags: ["posts"], revalidate: false },
+);
+
+/** Public single post by slug, cached per slug. */
+export function getPublishedPost(slug: string) {
+  return unstable_cache(
+    async (): Promise<PostDetail | null> => {
+      try {
+        const rows = await db
+          .select({
+            id: postsTable.id,
+            title: postsTable.title,
+            slug: postsTable.slug,
+            excerpt: postsTable.excerpt,
+            status: postsTable.status,
+            publishedAt: postsTable.publishedAt,
+            readingMinutes: postsTable.readingMinutes,
+            wordCount: postsTable.wordCount,
+            updatedAt: postsTable.updatedAt,
+            content: postsTable.content,
+            seoTitle: postsTable.seoTitle,
+            seoDescription: postsTable.seoDescription,
+            canonicalUrl: postsTable.canonicalUrl,
+            noindex: postsTable.noindex,
+            categoryName: categories.name,
+            categorySlug: categories.slug,
+            authorName: users.name,
+            ...coverJoin(),
+          })
+          .from(postsTable)
+          .leftJoin(categories, eq(postsTable.categoryId, categories.id))
+          .leftJoin(users, eq(postsTable.authorId, users.id))
+          .leftJoin(media, eq(postsTable.coverMediaId, media.id))
+          .where(and(eq(postsTable.slug, slug), publicCondition()))
+          .limit(1);
+
+        const row = rows[0];
+        if (!row) return null;
+
+        const tagRows = await db
+          .select({ name: tags.name })
+          .from(postTags)
+          .innerJoin(tags, eq(postTags.tagId, tags.id))
+          .where(eq(postTags.postId, row.id));
+
+        const doc = isSafeDoc(row.content) ? pruneDoc(row.content) : { type: "doc" as const };
+
+        return {
+          id: row.id,
+          title: row.title,
+          slug: row.slug,
+          excerpt:
+            row.excerpt?.trim() || autoExcerpt(doc),
+          status: row.status as PostStatus,
+          categoryName: row.categoryName,
+          categorySlug: row.categorySlug,
+          publishedAt: row.publishedAt ? row.publishedAt.toISOString() : null,
+          readingMinutes: row.readingMinutes ?? 0,
+          wordCount: row.wordCount ?? 0,
+          coverUrl: row.coverUrl,
+          coverAlt: row.coverAlt?.trim() ?? "",
+          updatedAt: row.updatedAt.toISOString(),
+          content: doc,
+          seoTitle: row.seoTitle ?? "",
+          seoDescription: row.seoDescription ?? "",
+          canonicalUrl: row.canonicalUrl ?? "",
+          noindex: row.noindex,
+          authorName: row.authorName,
+          tagNames: tagRows.map((tag) => tag.name),
+        };
+      } catch {
+        return null;
+      }
     },
     ["published-post", slug],
     { tags: ["posts", `post:${slug}`], revalidate: false },

@@ -60,23 +60,27 @@ export function normaliseRedirectPath(value: string): string {
  */
 const readRedirectMap = unstable_cache(
   async (): Promise<Record<string, { to: string; code: number }>> => {
-    const rows = await db
-      .select({
-        fromPath: redirects.fromPath,
-        toPath: redirects.toPath,
-        code: redirects.code,
-      })
-      .from(redirects)
-      .where(eq(redirects.isActive, true));
+    try {
+      const rows = await db
+        .select({
+          fromPath: redirects.fromPath,
+          toPath: redirects.toPath,
+          code: redirects.code,
+        })
+        .from(redirects)
+        .where(eq(redirects.isActive, true));
 
-    const map: Record<string, { to: string; code: number }> = {};
-    for (const row of rows) {
-      map[normaliseRedirectPath(row.fromPath)] = {
-        to: row.toPath,
-        code: row.code,
-      };
+      const map: Record<string, { to: string; code: number }> = {};
+      for (const row of rows) {
+        map[normaliseRedirectPath(row.fromPath)] = {
+          to: row.toPath,
+          code: row.code,
+        };
+      }
+      return map;
+    } catch {
+      return {};
     }
-    return map;
   },
   ["seo-redirects"],
   { tags: ["redirects"], revalidate: false },

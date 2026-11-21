@@ -28,10 +28,14 @@ export * from "./settings-registry";
  */
 const readSettings = unstable_cache(
   async (): Promise<SiteSettings> => {
-    const rows = await db
-      .select({ key: settingsTable.key, value: settingsTable.value })
-      .from(settingsTable);
-    return resolveSettings(rows);
+    try {
+      const rows = await db
+        .select({ key: settingsTable.key, value: settingsTable.value })
+        .from(settingsTable);
+      return resolveSettings(rows);
+    } catch {
+      return resolveSettings([]);
+    }
   },
   ["site-settings"],
   { tags: ["settings"], revalidate: false },

@@ -36,22 +36,26 @@ export type PageRecord = {
 function readPage(key: string) {
   return unstable_cache(
     async (): Promise<PageRecord | null> => {
-      const rows = await db
-        .select()
-        .from(pagesTable)
-        .where(eq(pagesTable.key, key))
-        .limit(1);
+      try {
+        const rows = await db
+          .select()
+          .from(pagesTable)
+          .where(eq(pagesTable.key, key))
+          .limit(1);
 
-      const row = rows[0];
-      if (!row) return null;
+        const row = rows[0];
+        if (!row) return null;
 
-      return {
-        key: row.key,
-        title: row.title,
-        content: resolvePageContent(key, row.content),
-        status: row.status,
-        updatedAt: row.updatedAt,
-      };
+        return {
+          key: row.key,
+          title: row.title,
+          content: resolvePageContent(key, row.content),
+          status: row.status,
+          updatedAt: row.updatedAt,
+        };
+      } catch {
+        return null;
+      }
     },
     ["page", key],
     { tags: ["pages", `page:${key}`], revalidate: false },

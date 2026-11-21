@@ -110,14 +110,18 @@ export async function getMediaById(id: number): Promise<MediaRow | null> {
  */
 const resolveUrlCached = unstable_cache(
   async (id: number): Promise<string | null> => {
-    const rows = await db
-      .select({ url: mediaTable.url, deletedAt: mediaTable.deletedAt })
-      .from(mediaTable)
-      .where(eq(mediaTable.id, id))
-      .limit(1);
-    const row = rows[0];
-    if (!row || row.deletedAt) return null;
-    return row.url;
+    try {
+      const rows = await db
+        .select({ url: mediaTable.url, deletedAt: mediaTable.deletedAt })
+        .from(mediaTable)
+        .where(eq(mediaTable.id, id))
+        .limit(1);
+      const row = rows[0];
+      if (!row || row.deletedAt) return null;
+      return row.url;
+    } catch {
+      return null;
+    }
   },
   ["media-url"],
   { tags: ["media"], revalidate: false },
@@ -139,19 +143,23 @@ export type MediaAsset = { url: string; alt: string };
  */
 const resolveAssetCached = unstable_cache(
   async (id: number): Promise<MediaAsset | null> => {
-    const rows = await db
-      .select({
-        url: mediaTable.url,
-        alt: mediaTable.alt,
-        title: mediaTable.title,
-        deletedAt: mediaTable.deletedAt,
-      })
-      .from(mediaTable)
-      .where(eq(mediaTable.id, id))
-      .limit(1);
-    const row = rows[0];
-    if (!row || row.deletedAt) return null;
-    return { url: row.url, alt: row.alt?.trim() || row.title?.trim() || "" };
+    try {
+      const rows = await db
+        .select({
+          url: mediaTable.url,
+          alt: mediaTable.alt,
+          title: mediaTable.title,
+          deletedAt: mediaTable.deletedAt,
+        })
+        .from(mediaTable)
+        .where(eq(mediaTable.id, id))
+        .limit(1);
+      const row = rows[0];
+      if (!row || row.deletedAt) return null;
+      return { url: row.url, alt: row.alt?.trim() || row.title?.trim() || "" };
+    } catch {
+      return null;
+    }
   },
   ["media-asset"],
   { tags: ["media"], revalidate: false },

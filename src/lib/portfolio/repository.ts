@@ -45,38 +45,42 @@ function publicCondition() {
 /** Public list, ordered by the editor's sort order. */
 export const listPublishedPortfolio = unstable_cache(
   async (): Promise<PortfolioCard[]> => {
-    const rows = await db
-      .select({
-        id: portfolioItems.id,
-        title: portfolioItems.title,
-        slug: portfolioItems.slug,
-        summary: portfolioItems.summary,
-        tags: portfolioItems.tags,
-        client: portfolioItems.client,
-        year: portfolioItems.year,
-        isFeatured: portfolioItems.isFeatured,
-        results: portfolioItems.results,
-        coverUrl: media.url,
-        coverAlt: media.alt,
-      })
-      .from(portfolioItems)
-      .leftJoin(media, eq(portfolioItems.coverMediaId, media.id))
-      .where(publicCondition())
-      .orderBy(asc(portfolioItems.sortOrder), desc(portfolioItems.createdAt));
+    try {
+      const rows = await db
+        .select({
+          id: portfolioItems.id,
+          title: portfolioItems.title,
+          slug: portfolioItems.slug,
+          summary: portfolioItems.summary,
+          tags: portfolioItems.tags,
+          client: portfolioItems.client,
+          year: portfolioItems.year,
+          isFeatured: portfolioItems.isFeatured,
+          results: portfolioItems.results,
+          coverUrl: media.url,
+          coverAlt: media.alt,
+        })
+        .from(portfolioItems)
+        .leftJoin(media, eq(portfolioItems.coverMediaId, media.id))
+        .where(publicCondition())
+        .orderBy(asc(portfolioItems.sortOrder), desc(portfolioItems.createdAt));
 
-    return rows.map((row) => ({
-      id: row.id,
-      title: row.title,
-      slug: row.slug,
-      summary: row.summary ?? "",
-      tags: Array.isArray(row.tags) ? row.tags : [],
-      client: row.client ?? "",
-      year: row.year ?? "",
-      isFeatured: row.isFeatured,
-      coverUrl: row.coverUrl,
-      coverAlt: row.coverAlt?.trim() ?? "",
-      results: Array.isArray(row.results) ? row.results : [],
-    }));
+      return rows.map((row) => ({
+        id: row.id,
+        title: row.title,
+        slug: row.slug,
+        summary: row.summary ?? "",
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        client: row.client ?? "",
+        year: row.year ?? "",
+        isFeatured: row.isFeatured,
+        coverUrl: row.coverUrl,
+        coverAlt: row.coverAlt?.trim() ?? "",
+        results: Array.isArray(row.results) ? row.results : [],
+      }));
+    } catch {
+      return [];
+    }
   },
   ["published-portfolio"],
   { tags: ["portfolio"], revalidate: false },
@@ -96,75 +100,79 @@ export const listFeaturedPortfolio = unstable_cache(
 export function getPublishedPortfolioItem(slug: string) {
   return unstable_cache(
     async (): Promise<PortfolioDetail | null> => {
-      const rows = await db
-        .select({
-          id: portfolioItems.id,
-          title: portfolioItems.title,
-          slug: portfolioItems.slug,
-          summary: portfolioItems.summary,
-          tags: portfolioItems.tags,
-          client: portfolioItems.client,
-          year: portfolioItems.year,
-          isFeatured: portfolioItems.isFeatured,
-          results: portfolioItems.results,
-          content: portfolioItems.content,
-          gallery: portfolioItems.gallery,
-          externalUrl: portfolioItems.externalUrl,
-          seoTitle: portfolioItems.seoTitle,
-          seoDescription: portfolioItems.seoDescription,
-          noindex: portfolioItems.noindex,
-          coverUrl: media.url,
-          coverAlt: media.alt,
-        })
-        .from(portfolioItems)
-        .leftJoin(media, eq(portfolioItems.coverMediaId, media.id))
-        .where(and(eq(portfolioItems.slug, slug), publicCondition()))
-        .limit(1);
+      try {
+        const rows = await db
+          .select({
+            id: portfolioItems.id,
+            title: portfolioItems.title,
+            slug: portfolioItems.slug,
+            summary: portfolioItems.summary,
+            tags: portfolioItems.tags,
+            client: portfolioItems.client,
+            year: portfolioItems.year,
+            isFeatured: portfolioItems.isFeatured,
+            results: portfolioItems.results,
+            content: portfolioItems.content,
+            gallery: portfolioItems.gallery,
+            externalUrl: portfolioItems.externalUrl,
+            seoTitle: portfolioItems.seoTitle,
+            seoDescription: portfolioItems.seoDescription,
+            noindex: portfolioItems.noindex,
+            coverUrl: media.url,
+            coverAlt: media.alt,
+          })
+          .from(portfolioItems)
+          .leftJoin(media, eq(portfolioItems.coverMediaId, media.id))
+          .where(and(eq(portfolioItems.slug, slug), publicCondition()))
+          .limit(1);
 
-      const row = rows[0];
-      if (!row) return null;
+        const row = rows[0];
+        if (!row) return null;
 
-      const galleryIds = Array.isArray(row.gallery) ? row.gallery : [];
-      let galleryUrls: { url: string; alt: string }[] = [];
-      if (galleryIds.length > 0) {
-        const galleryRows = await db
-          .select({ id: media.id, url: media.url, alt: media.alt, title: media.title })
-          .from(media)
-          .where(
-            and(
-              isNull(media.deletedAt),
-              sql`${media.id} = ANY(${galleryIds})`,
-            ),
-          );
-        const byId = new Map(galleryRows.map((item) => [item.id, item]));
-        galleryUrls = galleryIds
-          .map((id) => byId.get(id))
-          .filter((item): item is NonNullable<typeof item> => Boolean(item))
-          .map((item) => ({
-            url: item.url,
-            alt: item.alt?.trim() || item.title?.trim() || "",
-          }));
+        const galleryIds = Array.isArray(row.gallery) ? row.gallery : [];
+        let galleryUrls: { url: string; alt: string }[] = [];
+        if (galleryIds.length > 0) {
+          const galleryRows = await db
+            .select({ id: media.id, url: media.url, alt: media.alt, title: media.title })
+            .from(media)
+            .where(
+              and(
+                isNull(media.deletedAt),
+                sql`${media.id} = ANY(${galleryIds})`,
+              ),
+            );
+          const byId = new Map(galleryRows.map((item) => [item.id, item]));
+          galleryUrls = galleryIds
+            .map((id) => byId.get(id))
+            .filter((item): item is NonNullable<typeof item> => Boolean(item))
+            .map((item) => ({
+              url: item.url,
+              alt: item.alt?.trim() || item.title?.trim() || "",
+            }));
+        }
+
+        return {
+          id: row.id,
+          title: row.title,
+          slug: row.slug,
+          summary: row.summary ?? "",
+          tags: Array.isArray(row.tags) ? row.tags : [],
+          client: row.client ?? "",
+          year: row.year ?? "",
+          isFeatured: row.isFeatured,
+          coverUrl: row.coverUrl,
+          coverAlt: row.coverAlt?.trim() ?? "",
+          results: Array.isArray(row.results) ? row.results : [],
+          content: isSafeDoc(row.content) ? pruneDoc(row.content) : { type: "doc" },
+          galleryUrls,
+          externalUrl: row.externalUrl ?? "",
+          seoTitle: row.seoTitle ?? "",
+          seoDescription: row.seoDescription ?? "",
+          noindex: row.noindex,
+        };
+      } catch {
+        return null;
       }
-
-      return {
-        id: row.id,
-        title: row.title,
-        slug: row.slug,
-        summary: row.summary ?? "",
-        tags: Array.isArray(row.tags) ? row.tags : [],
-        client: row.client ?? "",
-        year: row.year ?? "",
-        isFeatured: row.isFeatured,
-        coverUrl: row.coverUrl,
-        coverAlt: row.coverAlt?.trim() ?? "",
-        results: Array.isArray(row.results) ? row.results : [],
-        content: isSafeDoc(row.content) ? pruneDoc(row.content) : { type: "doc" },
-        galleryUrls,
-        externalUrl: row.externalUrl ?? "",
-        seoTitle: row.seoTitle ?? "",
-        seoDescription: row.seoDescription ?? "",
-        noindex: row.noindex,
-      };
     },
     ["published-portfolio-item", slug],
     { tags: ["portfolio", `portfolio:${slug}`], revalidate: false },

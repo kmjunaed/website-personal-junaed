@@ -41,19 +41,23 @@ export type ActiveScript = {
  */
 const readActiveScripts = unstable_cache(
   async (): Promise<ActiveScript[]> => {
-    const rows = await db
-      .select({
-        id: scripts.id,
-        name: scripts.name,
-        location: scripts.location,
-        code: scripts.code,
-        pageScope: scripts.pageScope,
-      })
-      .from(scripts)
-      .where(eq(scripts.isActive, true))
-      .orderBy(asc(scripts.id));
+    try {
+      const rows = await db
+        .select({
+          id: scripts.id,
+          name: scripts.name,
+          location: scripts.location,
+          code: scripts.code,
+          pageScope: scripts.pageScope,
+        })
+        .from(scripts)
+        .where(eq(scripts.isActive, true))
+        .orderBy(asc(scripts.id));
 
-    return rows;
+      return rows;
+    } catch {
+      return [];
+    }
   },
   ["active-scripts"],
   { tags: ["scripts"], revalidate: false },
