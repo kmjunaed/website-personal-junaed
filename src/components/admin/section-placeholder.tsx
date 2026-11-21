@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/rbac";
+import { getAdminBase } from "@/lib/admin-path";
 
 /**
  * Placeholder for an admin section scheduled for a later phase.
@@ -25,6 +26,7 @@ export async function SectionPlaceholder({
   role?: PlaceholderRole;
 }) {
   await requireRole(role);
+  const base = await getAdminBase();
 
   return (
     <div className="mx-auto max-w-[820px]">
@@ -55,7 +57,7 @@ export async function SectionPlaceholder({
         </ul>
 
         <Link
-          href="/dashboard"
+          href={`${base}/dashboard`}
           className="mt-6 inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-bold text-violet-800 transition hover:bg-violet-50"
         >
           Back to dashboard

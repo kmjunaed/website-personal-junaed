@@ -151,7 +151,7 @@ export default async function AnalyticsPage({
             {RANGES.map((item) => (
               <Link
                 key={item.key}
-                href={`/analytics?range=${item.key}`}
+                href={`${base}/analytics?range=${item.key}`}
                 className={
                   item.key === rangeKey
                     ? "rounded-[8px] bg-violet-950 px-2.5 py-1.5 text-xs font-bold text-white"

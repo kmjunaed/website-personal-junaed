@@ -92,7 +92,7 @@ export default async function ActivityPage({
       else next.delete(key);
     }
     const text = next.toString();
-    return text ? `/admin/activity?${text}` : "/admin/activity";
+    return text ? `${base}/activity?${text}` : `${base}/activity`;
   };
 
   return (

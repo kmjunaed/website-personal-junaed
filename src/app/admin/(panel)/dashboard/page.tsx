@@ -213,7 +213,7 @@ export default async function DashboardPage() {
               {recentLeads.rows.map((lead) => (
                 <li key={lead.id} className="py-2.5">
                   <Link
-                    href={`/leads/${lead.id}`}
+                    href={`${base}/leads/${lead.id}`}
                     className="flex items-baseline justify-between gap-2"
                   >
                     <span className="truncate text-sm font-semibold">{lead.name}</span>
