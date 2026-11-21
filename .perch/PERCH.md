@@ -5,7 +5,12 @@ Master plan: `MVP.md`. How to work: `AGENT_GUIDE.md`. Where we stopped: `HANDOFF
 
 ## Repository — push at every phase and every checkpoint
 
-**Remote:** `https://github.com/zonaedh/junaed-website.git` · remote `origin` · branch `main`
+**Remote:** `https://github.com/kmjunaed/website-personal-junaed.git` · remote `origin` · branch `main`
+
+This is the **main repo**. A second copy exists at `zonaedh/junaed-website` and has diverged
+(342 tests vs 343, and it carries the phase-09 backup work this one does not). Do not treat
+that one as canonical and do not push to it from this workspace — `origin` here points at
+`kmjunaed`. If the two are ever reconciled, record which one won in `DECISIONS.md`.
 
 A phase is **not complete** until it is pushed. Neither is a checkpoint. Work that exists only
 on this machine does not count, because the next agent may not be on this machine.
