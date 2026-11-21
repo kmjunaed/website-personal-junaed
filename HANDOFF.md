@@ -6,7 +6,7 @@
 
 ## 0. Repository — push at every phase and every checkpoint
 
-**Remote:** `https://github.com/zonaedh/junaed-website.git` · remote `origin` · branch `main`
+**Remote:** `https://github.com/kmjunaed/website-personal-junaed.git` · remote `origin` · branch `main`
 
 A phase is **not complete** until it is pushed. Neither is a checkpoint. Work that exists only
 on the local machine does not count, because the next agent may not be on this machine.
@@ -20,7 +20,12 @@ If the push is rejected, **never force-push** over history you did not create. F
 resolve, push. Full protocol: `AGENT_GUIDE.md` §3.
 
 **Current sync state:** Phase 9 is committed, tagged `phase-09-complete` and pushed.
-Phases 0–9 are on `origin/main`.
+Phases 0–9 are on `origin/main` at `kmjunaed/website-personal-junaed`.
+
+**Every commit must be authored as `kmjunaed <89958692+kmjunaed@users.noreply.github.com>`.**
+Vercel Hobby refuses to build a deployment whose commit author is not the account that
+owns the project. A commit from any other address pushes fine and then silently fails to
+deploy. The identity is already set in this clone's git config.
 
 ## 1. Where We Are
 - **Current phase:** Phase 9 code complete, verified locally. **Launch is blocked.**

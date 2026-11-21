@@ -22,7 +22,7 @@ Legend: â¬œ not started Â· ðŸŸ¨ in progress Â· âœ… complete Â· 
 ## Live URLs
 - Public: https://junaedhossain.com â€” not deployed
 - Admin: https://admin.junaedhossain.com â€” not deployed (noindex verified locally only)
-- Repo: https://github.com/zonaedh/junaed-website (Phases 0â€“8 pushed) Â· Vercel project: not created
+- Repo: https://github.com/kmjunaed/website-personal-junaed (Phases 0â€“9 pushed) Â· Vercel project: not created
 
 ## Changelog (newest first)
 - 2026-11-21 â€” **Phase 9 complete (code); launch blocked.** Weekly encrypted backup

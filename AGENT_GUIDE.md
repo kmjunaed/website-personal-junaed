@@ -9,7 +9,20 @@ Another agent may continue after you at any moment (usage limits, crashes, hando
 
 ## Repository — push every phase, no exceptions
 
-**Remote:** `https://github.com/zonaedh/junaed-website.git` · remote `origin` · branch `main`
+**Remote:** `https://github.com/kmjunaed/website-personal-junaed.git` · remote `origin` · branch `main`
+
+**Commit identity is not optional.** This repository is connected to a Vercel Hobby
+account, and Vercel refuses to build a deployment whose commit author is not the
+account that owns the project. Every commit must be authored and committed as:
+
+```powershell
+git config user.name  "kmjunaed"
+git config user.email "89958692+kmjunaed@users.noreply.github.com"
+```
+
+Verify before pushing: `git log --format="%an <%ae>" | Sort-Object -Unique` must
+print exactly that one line. A commit from any other address will push fine and
+then silently fail to deploy.
 
 Every phase ends with a push. Every checkpoint ends with a push. Work that exists only on the
 local disk does not count as done, because the next agent may not be on this machine.
@@ -55,7 +68,7 @@ A checkpoint = **(a)** update HANDOFF "Current State / Next Steps", **(b)** tick
 **(c)** append one line to `logs/session-log.md`, **(d)** `git commit` (even WIP: `wip(phase-3): media picker modal`),
 **(e)** `git push origin main`.
 
-**Remote:** `https://github.com/zonaedh/junaed-website.git` (remote name `origin`, branch `main`).
+**Remote:** `https://github.com/kmjunaed/website-personal-junaed.git` (remote name `origin`, branch `main`).
 Push at every checkpoint, not just at phase end. The point of a checkpoint is that the work survives
 losing this machine.
 
