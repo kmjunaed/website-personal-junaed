@@ -41,7 +41,15 @@ export default async function RootLayout({
   const isAdmin = pathname.startsWith("/admin");
 
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${manrope.variable}`}
+      // Tells the Next router that `scroll-behavior: smooth` is intentional, so
+      // it can switch it off for the duration of a route transition. Without
+      // this the router's scroll-to-top animates, which reads as the page
+      // scrolling itself upward on every navigation.
+      data-scroll-behavior="smooth"
+    >
       <head>{isAdmin ? null : <CustomScripts pathname={pathname} location="head" />}</head>
       <body className="min-h-dvh bg-white text-ink antialiased">{children}</body>
     </html>

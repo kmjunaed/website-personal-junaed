@@ -127,6 +127,33 @@
 }
 
 /* ==========================================================================
+   Page transition
+   --------------------------------------------------------------------------
+   Applied by src/app/(site)/template.tsx, which remounts on every navigation.
+   Opacity only, and short: the per-section <Reveal> already carries the motion,
+   so adding a translate here would double it up and read as a bounce.
+
+   The router resets scroll to the top instantly (see data-scroll-behavior on
+   <html>), so this fade is what the eye actually lands on: the new page settles
+   in rather than snapping into place.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes jh-page-enter {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .page-enter {
+    animation: jh-page-enter 0.28s var(--ease-out-soft) both;
+  }
+}
+
+/* ==========================================================================
    Rich text (blog posts, case studies, legal pages)
    ========================================================================== */
 
