@@ -20,11 +20,13 @@ Human-readable status of **junaedhossain.com + admin panel**. Update at every ph
 Legend: â¬œ not started Â· ðŸŸ¨ in progress Â· âœ… complete Â· â›” blocked
 
 ## Live URLs
-- Public: https://junaedhossain.com â€” not deployed
-- Admin: https://admin.junaedhossain.com â€” not deployed (noindex verified locally only)
-- Repo: https://github.com/kmjunaed/website-personal-junaed (Phases 0â€“9 pushed) Â· Vercel project: not created
+- Vercel Live Deployment: https://website-personal-junaed.vercel.app (HTTP 200, SSL, security headers active)
+- Custom Domain (pending DNS/config): https://junaedhossain.com
+- Admin Subdomain (pending DNS/config): https://admin.junaedhossain.com
+- Repo: https://github.com/kmjunaed/website-personal-junaed · Vercel Project: `junaed2/website-personal-junaed` (git automated CI/CD enabled)
 
 ## Changelog (newest first)
+- 2026-11-21 — **Frontend deployed live to Vercel.** Connected Vercel project to GitHub repository `kmjunaed/website-personal-junaed`. Configured Node 22.x LTS runtime and legacy peer deps. Added defensive fallbacks in public readers so pre-render and static routes succeed smoothly before live database connection. Production deployment promoted and verified live (`https://website-personal-junaed.vercel.app`).
 - 2026-11-21 â€” **Phase 9 complete (code); launch blocked.** Weekly encrypted backup
   workflow (pg_dump â†’ gzip â†’ age â†’ SFTP â†’ verify size â†’ prune to newest 3 â†’ log â†’
   Telegram), with retention as pure tested logic that sorts by filename date and

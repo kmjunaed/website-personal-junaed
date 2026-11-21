@@ -2,7 +2,7 @@
 > Overwrite this file at every checkpoint. Keep it short, specific and true.
 > A new agent must be able to continue from this file alone (plus AGENT_GUIDE.md).
 
-**Last updated:** 2026-11-21 11:50 (UTC+6) · **By:** saffron
+**Last updated:** 2026-11-21 12:58 (UTC+6) · **By:** antigravity
 
 ## 0. Repository — push at every phase and every checkpoint
 
@@ -20,7 +20,7 @@ If the push is rejected, **never force-push** over history you did not create. F
 resolve, push. Full protocol: `AGENT_GUIDE.md` §3.
 
 **Current sync state:** Phase 9 is committed, tagged `phase-09-complete` and pushed.
-Phases 0–9 are on `origin/main` at `kmjunaed/website-personal-junaed`.
+Frontend is deployed live on Vercel at `https://website-personal-junaed.vercel.app`.
 
 **Every commit must be authored as `kmjunaed <89958692+kmjunaed@users.noreply.github.com>`.**
 Vercel Hobby refuses to build a deployment whose commit author is not the account that
@@ -28,10 +28,10 @@ owns the project. A commit from any other address pushes fine and then silently 
 deploy. The identity is already set in this clone's git config.
 
 ## 1. Where We Are
-- **Current phase:** Phase 9 code complete, verified locally. **Launch is blocked.**
-- **Phase progress:** Phase 0 local done (hosted half blocked on owner), Phases 1–9 complete.
-- **Gates:** lint, typecheck, 342/342 tests and build all pass as of this handoff.
-- **Phase 9 is the last phase in MVP.md.** What remains is infrastructure, not code.
+- **Current status:** Frontend deployed & live on Vercel (`https://website-personal-junaed.vercel.app`).
+- **Phase progress:** Phases 0–9 complete. Vercel project connected to GitHub repository with automated git deployments.
+- **Gates:** lint, typecheck, 342/342 tests and build all pass.
+- **What remains:** Connecting live services (Neon DB, R2, Resend, custom domains).
 
 ## 2. What Phase 9 Delivered
 - **Backups** — `src/lib/backup/rules.ts` (retention as pure tested logic, 28 tests),
@@ -46,13 +46,13 @@ deploy. The identity is already set in this clone's git config.
 - **Docs** — `docs/qa-checklist.md` (every row verified / blocked / not run) and
   `docs/launch-runbook.md`.
 
-## 3. THE LAUNCH IS BLOCKED ON FOUR OWNER ITEMS
-1. **Vercel project + production deploy** — there is no live site.
-2. **Neon production database** — dev runs on local PGlite.
-3. **Cloudflare R2 bucket** — the storage adapter refuses disk in production by design.
-4. **Resend API key + verified domain** — no transactional email has ever been sent.
+## 3. THREE REMAINING LAUNCH ITEMS (OWNER CREDENTIALS)
+1. **Neon production database** — needed for live admin panel and DB-persisted changes. Dev runs on local PGlite. Once provided: update `DATABASE_URL` in Vercel and run `npm run db:migrate && npm run db:seed`.
+2. **Cloudflare R2 bucket** — media uploads. The storage adapter refuses disk in production by design.
+3. **Resend API key + verified domain** — lead notifications, password reset, staff invites.
+4. *(Optional / DNS)* Connect custom domains `junaedhossain.com` and `admin.junaedhossain.com` in Vercel Domains.
 
-Do not describe the project as launched until these exist and the runbook is walked.
+Do not describe the project as fully launched until these exist and the runbook is walked.
 
 ## 4. Known Issues / Tech Debt
 - The `production` GitHub Environment needs a required-reviewer rule set by hand, or
