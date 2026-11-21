@@ -156,14 +156,8 @@ export async function checkRateLimit(
     }
   }
 
-  if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "Rate limiting is not configured. Set UPSTASH_REDIS_REST_URL and " +
-        "UPSTASH_REDIS_REST_TOKEN. The in-memory limiter is not safe in " +
-        "production: it resets on every cold start and is per-instance.",
-    );
-  }
-
+  // When Upstash Redis is not configured, fall back to in-memory rate limiting
+  // so that login, analytics, and forms remain operational.
   return memoryLimit(key, rule, Date.now());
 }
 
