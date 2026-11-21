@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { confirmTwoFactor, type TwoFactorState } from "./actions";
 
 const initialState: TwoFactorState = { status: "idle" };
@@ -15,6 +16,11 @@ export function TwoFactorSetup({ otpauthUrl }: { otpauthUrl: string }) {
     confirmTwoFactor,
     initialState,
   );
+  // Same derivation the shell uses (D-024): on the admin host the pathname has no
+  // /admin prefix, on loopback it does. A client component cannot call
+  // getAdminBase(), which reads request headers.
+  const pathname = usePathname();
+  const base = pathname.startsWith("/admin") ? "/admin" : "";
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [qrError, setQrError] = useState(false);
 
@@ -70,7 +76,7 @@ export function TwoFactorSetup({ otpauthUrl }: { otpauthUrl: string }) {
         </div>
 
         <Link
-          href="/dashboard"
+          href={`${base}/dashboard`}
           className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-violet-950 px-5 text-sm font-bold text-white transition hover:bg-violet-700"
         >
           Continue to dashboard

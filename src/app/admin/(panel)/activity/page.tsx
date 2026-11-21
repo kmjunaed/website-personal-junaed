@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireRole } from "@/lib/rbac";
+import { getAdminBase } from "@/lib/admin-path";
 import {
   listActionNames,
   listActors,
@@ -51,6 +52,7 @@ export default async function ActivityPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const actor = await requireRole("admin");
+  const base = await getAdminBase();
   const params = await searchParams;
 
   const first = (key: string): string => {
@@ -178,7 +180,7 @@ export default async function ActivityPage({
             Apply filters
           </button>
           <Link
-            href="/admin/activity"
+            href={`${base}/activity`}
             className="inline-flex items-center rounded-[10px] border border-line px-4 py-2 text-sm font-semibold transition hover:bg-violet-50"
           >
             Reset

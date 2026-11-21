@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireRole, ROLE_LABELS } from "@/lib/rbac";
+import { getAdminBase } from "@/lib/admin-path";
 import {
   getActiveNow,
   getDailySeries,
@@ -46,6 +47,7 @@ function formatWhen(value: Date | string): string {
  */
 export default async function DashboardPage() {
   const user = await requireRole("support");
+  const base = await getAdminBase();
 
   const current = resolveRange("7d");
   const previousFrom = new Date(current.from);
@@ -114,19 +116,19 @@ export default async function DashboardPage() {
         </div>
         <div className="flex flex-wrap gap-2">
           <Link
-            href="/posts/new"
+            href={`${base}/posts/new`}
             className="inline-flex min-h-10 items-center rounded-[10px] bg-violet-950 px-4 text-sm font-semibold text-white hover:bg-violet-800"
           >
             New post
           </Link>
           <Link
-            href="/portfolio/new"
+            href={`${base}/portfolio/new`}
             className="inline-flex min-h-10 items-center rounded-[10px] border border-line px-4 text-sm font-semibold hover:bg-violet-50"
           >
             New project
           </Link>
           <Link
-            href="/media"
+            href={`${base}/media`}
             className="inline-flex min-h-10 items-center rounded-[10px] border border-line px-4 text-sm font-semibold hover:bg-violet-50"
           >
             Upload media
@@ -160,7 +162,7 @@ export default async function DashboardPage() {
           <h2 className="font-display text-lg font-extrabold tracking-[-0.03em]">
             Visitors, last 30 days
           </h2>
-          <Link href="/analytics" className="text-xs font-bold text-violet-700 hover:underline">
+          <Link href={`${base}/analytics`} className="text-xs font-bold text-violet-700 hover:underline">
             Full analytics →
           </Link>
         </div>
@@ -198,7 +200,7 @@ export default async function DashboardPage() {
             <h2 className="text-sm font-bold uppercase tracking-wide text-muted">
               Latest enquiries
             </h2>
-            <Link href="/leads" className="text-xs font-bold text-violet-700 hover:underline">
+            <Link href={`${base}/leads`} className="text-xs font-bold text-violet-700 hover:underline">
               All leads →
             </Link>
           </div>
@@ -310,7 +312,7 @@ export default async function DashboardPage() {
           <h2 className="text-sm font-bold uppercase tracking-wide text-muted">
             Recent alerts
           </h2>
-          <Link href="/alerts" className="text-xs font-bold text-violet-700 hover:underline">
+          <Link href={`${base}/alerts`} className="text-xs font-bold text-violet-700 hover:underline">
             All alerts →
           </Link>
         </div>

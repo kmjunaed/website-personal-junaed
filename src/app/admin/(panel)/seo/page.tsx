@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireRole } from "@/lib/rbac";
+import { getAdminBase } from "@/lib/admin-path";
 import { getSeoDefaults, listNotFound, listRedirects } from "@/lib/seo/repository";
 import { titleLengthState, descriptionLengthState } from "@/lib/seo/core";
 import {
@@ -40,6 +41,7 @@ const STATE_STYLE: Record<string, string> = {
  */
 export default async function SEOPage() {
   const user = await requireRole("editor");
+  const base = await getAdminBase();
   const canClear = user.role === "owner" || user.role === "admin";
 
   const [defaults, redirects, notFound] = await Promise.all([
@@ -69,7 +71,7 @@ export default async function SEOPage() {
             Global defaults
           </h2>
           <Link
-            href="/settings"
+            href={`${base}/settings`}
             className="text-sm font-semibold text-violet-700 hover:underline"
           >
             Edit in Settings →

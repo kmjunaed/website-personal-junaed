@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireRole } from "@/lib/rbac";
+import { getAdminBase } from "@/lib/admin-path";
 import { getSettings } from "@/lib/settings";
 import {
   getActiveNow,
@@ -90,6 +91,7 @@ export default async function AnalyticsPage({
   searchParams: Promise<{ range?: string }>;
 }) {
   await requireRole("support");
+  const base = await getAdminBase();
   const { range: rangeParam } = await searchParams;
   const rangeKey: RangeKey = isRangeKey(rangeParam ?? "") ? (rangeParam as RangeKey) : "7d";
   const range = resolveRange(rangeKey);
@@ -240,7 +242,7 @@ export default async function AnalyticsPage({
       <p className="text-xs leading-[1.7] text-muted">
         Retention is {settings.analyticsRetentionMonths} months and is enforced when this
         page loads. Change it in{" "}
-        <Link href="/settings" className="font-semibold text-violet-700 hover:underline">
+        <Link href={`${base}/settings`} className="font-semibold text-violet-700 hover:underline">
           Settings
         </Link>
         .
