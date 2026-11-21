@@ -231,3 +231,22 @@
   border-top: 1px solid var(--color-line);
   margin: 2.5em 0;
 }
+
+/* ==========================================================================
+   Admin loading states
+   --------------------------------------------------------------------------
+   The shimmer used by src/components/admin/skeleton.tsx. Declared here rather
+   than as an inline @keyframes because Tailwind's arbitrary animation utility
+   needs the keyframes to exist in the stylesheet.
+
+   Gated on prefers-reduced-motion: no-preference, matching .js-reveal above. A
+   visitor who asked not to animate gets a static grey block instead.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes jh-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState, type ReactNode } from "react";
 import type { SessionUser } from "@/lib/auth/session";
@@ -64,6 +64,29 @@ const NAV: NavGroup[] = [
   },
 ];
 
+/**
+ * Pending indicator for a nav link.
+ *
+ * `useLinkStatus` must be called inside a <Link>, which is why this is its own
+ * component rather than a hook in the shell. It renders a small spinner in place
+ * of the icon while that link's navigation is in flight, so the click has an
+ * immediate answer even before the server responds.
+ *
+ * The spinner is `motion-safe:` only. With reduced motion the label simply dims,
+ * which still communicates "working" without spinning.
+ */
+function NavPending({ active }: { active: boolean }) {
+  const { pending } = useLinkStatus();
+  if (!pending) return null;
+  return (
+    <span
+      aria-hidden="true"
+      className={`ml-auto size-3.5 shrink-0 rounded-full border-2 border-current border-t-transparent motion-safe:animate-spin ${
+        active ? "opacity-90" : "opacity-60"
+      }`}
+    />
+  );
+}
 const RANK: Record<string, number> = { support: 1, editor: 2, admin: 3, owner: 4 };
 
 function canSee(userRole: string, required?: string): boolean {
@@ -158,6 +181,7 @@ export function AdminShell({
                           {item.icon}
                         </span>
                         {!collapsed ? <span>{item.label}</span> : null}
+                        <NavPending active={active} />
                         {item.href === "/leads" && unreadLeads > 0 ? (
                           <span
                             className={`ml-auto rounded-full px-1.5 py-0.5 text-[11px] font-bold ${
