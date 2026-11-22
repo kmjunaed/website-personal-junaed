@@ -2,6 +2,8 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { ContactForm } from "@/components/site/contact-form";
+import { FaqAccordion } from "@/components/site/faq-accordion";
+import { contactFaq } from "@/lib/faq";
 import { getPageContent } from "@/lib/pages";
 import { getSettings } from "@/lib/settings";
 import { createChallenge } from "@/lib/contact/captcha";
@@ -93,6 +95,22 @@ export default async function ContactPage() {
                 <b className="text-[15px] font-bold">{content.responseTime}</b>
               </span>
             </div>
+          </div>
+
+          {/* Objections first: these are what stops people sending the form,
+              so they sit under the contact details rather than in a section
+              further down the page. */}
+          <div className="mt-9">
+            <Eyebrow>Objections up front</Eyebrow>
+            <h2 className="mt-3 mb-2 text-[clamp(1.35rem,2.2vw,1.6rem)] leading-[1.2] tracking-[-0.035em]">
+              Straight answers to what you&rsquo;re{" "}
+              <span className="text-violet-600">probably thinking</span>
+            </h2>
+            <p className="mb-4 text-[14.5px] leading-[1.65] text-muted">
+              Most people I speak with have been oversold or buried in jargon.
+              So here are the honest answers first.
+            </p>
+            <FaqAccordion items={contactFaq} />
           </div>
         </Reveal>
 
