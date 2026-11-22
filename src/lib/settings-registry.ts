@@ -75,7 +75,7 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     kind: "textarea",
     group: "Identity",
     default:
-      "Digital marketing, SEO, graphic design and WordPress customization.",
+      "Paid advertising, SEO, AI search optimisation, content and WordPress design.",
     maxLength: 320,
     help: "Default meta description when a page has none of its own.",
   },
@@ -137,7 +137,7 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     kind: "textarea",
     group: "SEO",
     default:
-      "Digital marketing, SEO, graphic design and WordPress customization for growing brands.",
+      "Paid advertising, SEO, AI search optimisation, content and WordPress design for growing brands.",
     maxLength: 320,
   },
   {
@@ -225,7 +225,7 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     kind: "textarea",
     group: "Footer",
     default:
-      "Digital marketing, SEO, design and WordPress — one growth system, built around your business.",
+      "Paid ads, SEO, AI search, content, WordPress and design — one growth system, built around your business.",
     maxLength: 320,
     help: "The short paragraph under your name in the footer.",
   },
@@ -297,6 +297,15 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     default: "",
     maxLength: 300,
     help: "A wa.me link, e.g. https://wa.me/8801XXXXXXXXX.",
+  },
+  {
+    key: "site.fiverr",
+    label: "Fiverr profile URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+    help: "Shown in the footer's contact list. Leave empty to hide the row.",
   },
   {
     key: "site.upwork",
@@ -491,6 +500,7 @@ export type SiteSettings = {
   socialTiktok: string;
   whatsapp: string;
   upwork: string;
+  fiverr: string;
   footerText: string;
   footerBio: string;
   footerLocation: string;
@@ -542,6 +552,7 @@ export const SETTING_FIELD_NAMES: Record<string, keyof SiteSettings> = {
   "site.socialTiktok": "socialTiktok",
   "site.whatsapp": "whatsapp",
   "site.upwork": "upwork",
+  "site.fiverr": "fiverr",
   "footer.text": "footerText",
   "footer.bio": "footerBio",
   "footer.location": "footerLocation",

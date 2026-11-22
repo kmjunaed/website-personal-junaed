@@ -68,6 +68,7 @@ export default async function SiteLayout({
         phone={settings.phone}
         whatsapp={settings.whatsapp}
         upwork={settings.upwork}
+        fiverr={settings.fiverr}
         socials={{
           facebook: settings.socialFacebook,
           instagram: settings.socialInstagram,

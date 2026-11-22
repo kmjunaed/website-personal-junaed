@@ -9,7 +9,7 @@ export default function ServicesPage() {
       title="Services"
       phase="Phase 4"
       role="editor"
-      description="The four services, editable without touching code: title, icon, summary, full body, deliverables and order."
+      description="The six services, editable without touching code: title, icon, summary, full body, deliverables and order."
       bullets={[
     "Add a new service and it appears on /services automatically",
     "Per-service SEO fields",

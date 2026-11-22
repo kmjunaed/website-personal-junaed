@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: "Blog",
     description:
-      "Notes on digital marketing, SEO, design and WordPress — practical observations from client work.",
+      "Notes on paid media, SEO, AI search, content and WordPress — practical observations from client work.",
     path: "/blog",
   });
 }

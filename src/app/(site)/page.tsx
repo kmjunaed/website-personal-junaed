@@ -202,7 +202,7 @@ export default async function HomePage() {
             </SectionHead>
           </Reveal>
 
-          <ul className="grid gap-[17px] sm:grid-cols-2 xl:grid-cols-4">
+          <ul className="grid gap-[17px] sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <Reveal as="li" key={service.slug} delay={index * 60}>
                 <ServiceCard service={service} />

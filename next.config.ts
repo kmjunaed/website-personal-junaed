@@ -60,8 +60,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.r2.dev" },
     ],
   },
-  async headers() {
-    const isDev = process.env.NODE_ENV !== "production";
+  /**
+   * Old service URLs, before the offer was rebuilt around six services.
+   *
+   * These were live and may be linked or indexed, so each one points at its
+   * nearest successor rather than falling through to a 404. `permanent: false`
+   * (307) because the mapping is a judgement call, not a guarantee, and a 308
+   * would be cached by browsers long after the decision could change.
+   */
+  async redirects() {
+    return [
+      { source: "/services/digital-marketing", destination: "/services/paid-advertising", permanent: false },
+      { source: "/services/seo", destination: "/services/full-stack-seo", permanent: false },
+      { source: "/services/graphic-design", destination: "/services/graphics-design", permanent: false },
+      { source: "/services/wordpress-customization", destination: "/services/wordpress-design-development", permanent: false },
+    ];
+  },
+  async headers() {    const isDev = process.env.NODE_ENV !== "production";
 
     return [
       {

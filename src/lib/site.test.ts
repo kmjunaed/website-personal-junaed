@@ -49,7 +49,7 @@ describe("socialLinks", () => {
 });
 
 describe("contactRows", () => {
-  const empty = { email: "", phone: "", whatsapp: "", upwork: "", location: "" };
+  const empty = { email: "", phone: "", whatsapp: "", upwork: "", fiverr: "", location: "" };
 
   it("returns nothing when every field is blank", () => {
     expect(contactRows(empty)).toEqual([]);
@@ -69,8 +69,17 @@ describe("contactRows", () => {
     expect(row.label).toBe("+880 (171) 234-5678");
   });
 
-  it("gives the location row no href, so it renders as text", () => {
-    const [row] = contactRows({ ...empty, location: "Serving clients worldwide" });
+  it("builds a Fiverr row only when the profile URL is set", () => {
+    expect(contactRows({ ...empty, fiverr: "  " })).toEqual([]);
+
+    const [row] = contactRows({ ...empty, fiverr: "https://fiverr.com/junaed" });
+
+    expect(row.kind).toBe("fiverr");
+    expect(row.label).toBe("Hire me on Fiverr");
+    expect(row.href).toBe("https://fiverr.com/junaed");
+  });
+
+  it("gives the location row no href, so it renders as text", () => {    const [row] = contactRows({ ...empty, location: "Serving clients worldwide" });
 
     expect(row.kind).toBe("location");
     expect(row.href).toBeUndefined();
@@ -82,6 +91,7 @@ describe("contactRows", () => {
       phone: "+1",
       whatsapp: "https://wa.me/1",
       upwork: "https://upwork.com/x",
+      fiverr: "https://fiverr.com/x",
       location: "Worldwide",
     });
 
@@ -89,6 +99,7 @@ describe("contactRows", () => {
       "email",
       "whatsapp",
       "phone",
+      "fiverr",
       "upwork",
       "location",
     ]);

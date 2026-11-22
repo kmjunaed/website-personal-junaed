@@ -45,6 +45,7 @@ export type FooterProps = {
   phone: string;
   whatsapp: string;
   upwork: string;
+  fiverr: string;
   socials: Partial<Record<SocialPlatform, string>>;
 };
 
@@ -98,6 +99,7 @@ export function Footer(props: FooterProps) {
     phone: props.phone,
     whatsapp: props.whatsapp,
     upwork: props.upwork,
+    fiverr: props.fiverr,
     location: props.location,
   });
 
@@ -225,6 +227,8 @@ export function Footer(props: FooterProps) {
                       ) : row.kind === "whatsapp" ? (
                         <ChatIcon />
                       ) : row.kind === "upwork" ? (
+                        <StarIcon />
+                      ) : row.kind === "fiverr" ? (
                         <StarIcon />
                       ) : row.kind === "phone" ? (
                         <CallIcon />

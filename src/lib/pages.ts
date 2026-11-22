@@ -39,7 +39,7 @@ export type PageRecord = {
  * missing — until someone edited the page. Bumping PAGE_CONTENT_VERSION on any
  * change to the field list forces a fresh read instead (D-045).
  */
-const PAGE_CONTENT_VERSION = 2;
+const PAGE_CONTENT_VERSION = 3;
 
 function readPage(key: string) {
   return unstable_cache(

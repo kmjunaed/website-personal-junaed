@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { ContactForm } from "@/components/site/contact-form";
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: "Contact",
     description:
-      "Tell me about your project. Digital marketing, SEO, design and WordPress work for growing brands.",
+      "Tell me about your project. Paid advertising, SEO, AI search, content and WordPress work for growing brands.",
     path: "/contact",
   });
 }

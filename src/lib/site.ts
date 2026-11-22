@@ -12,7 +12,7 @@ export const site = {
   adminUrl: process.env.ADMIN_URL ?? "https://admin.junaedhossain.com",
   title: "Junaed Hossain — Digital Growth & Creative Solutions",
   description:
-    "Junaed Hossain — Digital marketing, SEO, graphic design and WordPress customization. Helping brands build a stronger digital presence.",
+    "Junaed Hossain — Paid advertising, SEO, AI search optimisation, content and WordPress design. Helping brands build a stronger digital presence.",
   tagline: "Digital solutions for growing brands",
   email: "hello@junaedhossain.com",
   themeColor: "#271164",
@@ -94,7 +94,7 @@ export function socialLinks(urls: Partial<Record<SocialPlatform, string>>) {
  * `href` decide the element.
  */
 export type ContactRow = {
-  kind: "email" | "whatsapp" | "upwork" | "location" | "phone";
+  kind: "email" | "whatsapp" | "upwork" | "fiverr" | "location" | "phone";
   label: string;
   href?: string;
 };
@@ -104,6 +104,7 @@ export function contactRows(input: {
   phone: string;
   whatsapp: string;
   upwork: string;
+  fiverr: string;
   location: string;
 }): ContactRow[] {
   const rows: ContactRow[] = [];
@@ -115,6 +116,7 @@ export function contactRows(input: {
   const phone = (input.phone ?? "").trim();
   const whatsapp = (input.whatsapp ?? "").trim();
   const upwork = (input.upwork ?? "").trim();
+  const fiverr = (input.fiverr ?? "").trim();
   const location = (input.location ?? "").trim();
 
   if (email) {
@@ -129,6 +131,9 @@ export function contactRows(input: {
       label: phone,
       href: `tel:${phone.replace(/[^\d+]/g, "")}`,
     });
+  }
+  if (fiverr) {
+    rows.push({ kind: "fiverr", label: "Hire me on Fiverr", href: fiverr });
   }
   if (upwork) {
     rows.push({ kind: "upwork", label: "Hire me on Upwork", href: upwork });

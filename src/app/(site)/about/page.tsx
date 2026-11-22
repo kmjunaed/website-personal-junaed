@@ -40,10 +40,12 @@ const principles = [
 ];
 
 const capabilities = [
-  { label: "Digital marketing", detail: "Campaign strategy, paid social, reporting" },
+  { label: "Paid advertising", detail: "Google, Meta and LinkedIn campaigns, tracking, reporting" },
   { label: "Search", detail: "Technical SEO, keyword mapping, content briefs" },
-  { label: "Design", detail: "Brand visuals, social templates, presentation design" },
+  { label: "AI search", detail: "GEO, AEO and LLM citation work across answer engines" },
+  { label: "Content", detail: "Editorial calendar, long-form, social templates" },
   { label: "WordPress", detail: "Custom themes, performance, editor-friendly builds" },
+  { label: "Design", detail: "Brand visuals, social templates, presentation design" },
 ];
 
 export default async function AboutPage() {
@@ -166,7 +168,7 @@ export default async function AboutPage() {
               What I actually do
             </h2>
             <p className="mt-3 text-[17px] leading-[1.75] text-muted">
-              Four capabilities, usually combined rather than sold separately.
+              Six capabilities, usually combined rather than sold separately.
             </p>
           </Reveal>
           <Reveal delay={80}>

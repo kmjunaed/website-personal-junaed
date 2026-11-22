@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: "Services",
     description:
-      "Digital marketing, SEO, graphic design and WordPress customization for growing brands. Clear scope, honest timelines, work that compounds.",
+      "Paid advertising, full stack SEO, AI search optimisation, content and social, WordPress and graphic design for growing brands. Clear scope, honest timelines, work that compounds.",
     path: "/services",
   });
 }
@@ -38,13 +38,14 @@ export default async function ServicesPage() {
           <Reveal>
             <Eyebrow>What I do</Eyebrow>
             <h1 className="mt-5 mb-5 max-w-[820px] text-[clamp(2.5rem,5.5vw,4rem)] leading-[1.06] tracking-[-0.05em]">
-              Four services. One goal:{" "}
+              Six services. One goal:{" "}
               <span className="text-violet-600">growth you can measure.</span>
             </h1>
             <p className="max-w-[640px] text-[17px] leading-[1.75] text-muted">
-              I keep the offer deliberately narrow. These are the four things I
+              I keep the offer deliberately narrow. These are the six things I
               do well, and each one is scoped so you know exactly what you are
-              buying before we start.
+              buying before we start. Most clients start with one and add
+              another once the first is working.
             </p>
           </Reveal>
         </div>

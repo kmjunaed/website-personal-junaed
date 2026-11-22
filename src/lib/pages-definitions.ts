@@ -149,7 +149,7 @@ export const PAGE_DEFINITIONS: readonly PageDefinition[] = [
         key: "statsStat1Label",
         label: "Credibility stat 1 — caption",
         kind: "text",
-        default: "On Upwork",
+        default: "On Fiverr",
         maxLength: 60,
       },
       {

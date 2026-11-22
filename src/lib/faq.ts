@@ -28,7 +28,7 @@ export const contactFaq: FaqItem[] = [
   {
     question: "Can one person really handle SEO, ads, content and a website?",
     answer:
-      "For a growing brand, yes — and it is usually better than stitching four freelancers together. The four services share one strategy, one keyword map and one reporting view, so the site, the content and the ads stop contradicting each other. Where a job genuinely needs a specialist, I say so and bring one in.",
+      "For a growing brand, yes — and it is usually better than stitching six freelancers together. The six services share one strategy, one keyword map and one reporting view, so the site, the content, the ads and the AI answers stop contradicting each other. Where a job genuinely needs a specialist, I say so and bring one in.",
   },
   {
     question: "Can you guarantee #1 rankings?",

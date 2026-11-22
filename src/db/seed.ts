@@ -31,7 +31,7 @@ import { PAGE_DEFINITIONS, defaultPageContent } from "@/lib/pages";
  *   npm run db:seed
  *
  * Creates the Owner account from SEED_OWNER_EMAIL / SEED_OWNER_PASSWORD,
- * default settings, categories and the four services.
+ * default settings, categories and the six services.
  *
  * Idempotent: re-running updates nothing that already exists, so it is safe
  * to run again after adding a service.
@@ -89,12 +89,12 @@ async function main() {
     "site.name": "Junaed Hossain",
     "site.tagline": "Digital solutions for growing brands",
     "site.description":
-      "Digital marketing, SEO, graphic design and WordPress customization.",
+      "Paid advertising, SEO, AI search optimisation, content and WordPress design.",
     "site.email": "hello@junaedhossain.com",
     "site.timezone": "Asia/Dhaka",
     "seo.titleTemplate": "%s | Junaed Hossain",
     "seo.defaultDescription":
-      "Digital marketing, SEO, graphic design and WordPress customization for growing brands.",
+      "Paid advertising, SEO, AI search optimisation, content and WordPress design for growing brands.",
     "email.fromName": "Junaed Hossain",
     "email.fromAddress": "hello@junaedhossain.com",
     "analytics.retentionMonths": 12,
