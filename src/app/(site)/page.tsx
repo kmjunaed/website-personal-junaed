@@ -7,7 +7,9 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionHead } from "@/components/ui/section-head";
 import { ServiceCard } from "@/components/site/service-card";
 import { ProjectCard } from "@/components/site/project-card";
+import { CredibilityBand } from "@/components/site/credibility-band";
 import { projects, services } from "@/lib/content";
+import { credibilityFromContent } from "@/lib/stats";
 import { getPageContent } from "@/lib/pages";
 import { resolveMediaAsset } from "@/lib/media/repository";
 import { listFeaturedPortfolio } from "@/lib/portfolio/repository";
@@ -111,6 +113,7 @@ export default async function HomePage() {
 
   const heroImageId = Number(content.heroImage) || null;
   const heroImage = await resolveMediaAsset(heroImageId);
+  const credibility = credibilityFromContent(content);
 
   return (
     <>
@@ -141,7 +144,7 @@ export default async function HomePage() {
         ]}
       />
       {/* ---------------- Hero ---------------- */}
-      <section className="pt-9 pb-14 lg:pt-12 lg:pb-[78px]">
+      <section className="pt-9 pb-12 lg:pt-12 lg:pb-16">
         <div className="wrap grid items-center gap-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-[60px]">
           <Reveal>
             <Eyebrow>{content.heroEyebrow}</Eyebrow>
@@ -177,6 +180,13 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ---------------- Credibility band ---------------- */}
+      <CredibilityBand
+        stats={credibility.stats}
+        clientsLabel={credibility.clientsLabel}
+        clients={credibility.clients}
+      />
 
       {/* ---------------- Services ---------------- */}
       <section className="bg-surface py-16 lg:py-[85px]" id="services">

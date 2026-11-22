@@ -32,7 +32,15 @@ export type PageRecord = {
 /**
  * Cached read of one page. Tagged `pages` AND `page:<key>` so a single page
  * edit does not have to invalidate every other page.
+ *
+ * The cache key carries a content version. `revalidate: false` means the entry
+ * survives across deploys, so a release that adds fields to a page definition
+ * would otherwise keep serving the old resolved object — with the new fields
+ * missing — until someone edited the page. Bumping PAGE_CONTENT_VERSION on any
+ * change to the field list forces a fresh read instead (D-045).
  */
+const PAGE_CONTENT_VERSION = 2;
+
 function readPage(key: string) {
   return unstable_cache(
     async (): Promise<PageRecord | null> => {
@@ -57,7 +65,7 @@ function readPage(key: string) {
         return null;
       }
     },
-    ["page", key],
+    ["page", key, `v${PAGE_CONTENT_VERSION}`],
     { tags: ["pages", `page:${key}`], revalidate: false },
   )();
 }

@@ -661,3 +661,24 @@ owner would believe a backup had been taken.
 
 
 ---
+
+## D-045 — The page content cache key carries a schema version
+
+**Date:** 2026-11-22
+**Status:** Accepted
+
+**Context.** `readPage` caches the *resolved* content object with
+`revalidate: false`, so the entry survives across deploys. Adding fields to a
+page definition (the credibility band added eleven to `home`) therefore kept
+serving the old object, which had no keys for the new fields. The band rendered
+nothing on a fresh dev server while the source, the tests and the defaults were
+all correct — the failure looked like a component bug and was not one.
+
+**Decision.** The `unstable_cache` key is `["page", key, "v<N>"]` with
+`PAGE_CONTENT_VERSION` in `lib/pages.ts`. Any change to a page's field list
+bumps `N`, which misses the old entry and re-resolves from the database.
+
+**Consequences.** Adding a page field is now two edits: the definition and the
+version bump. Forgetting the bump is silent, so the comment on the constant says
+so. The alternative — `revalidate: 0` or dropping the cache — would put a
+database read on every page render for a problem that happens a few times a year.
