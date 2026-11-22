@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { getSettings } from "@/lib/settings";
+import { resolveMediaUrl } from "@/lib/media/repository";
 import { ConsentBanner } from "@/components/analytics/consent-banner";
 import { AnalyticsTracker } from "@/components/analytics/analytics-tracker";
 import { TrackingTags } from "@/components/analytics/tracking-tags";
@@ -24,6 +25,12 @@ export default async function SiteLayout({
   children: ReactNode;
 }) {
   const settings = await getSettings();
+
+  // The logo setting stores a media id; the footer needs a URL. Resolved here,
+  // once, rather than in the component so the footer stays a pure render.
+  const logoUrl = settings.logo
+    ? await resolveMediaUrl(Number(settings.logo))
+    : null;
 
   // The proxy sets this on every public request so a server component can scope
   // custom snippets without turning the layout into a client component.
@@ -50,7 +57,26 @@ export default async function SiteLayout({
       <Footer
         siteName={settings.name}
         shortName={settings.shortName}
+        role={settings.role}
+        bio={settings.footerBio}
+        logoUrl={logoUrl}
         footerText={settings.footerText}
+        location={settings.footerLocation}
+        ctaLabel={settings.footerCtaLabel}
+        ctaHref={settings.footerCtaHref}
+        email={settings.email}
+        phone={settings.phone}
+        whatsapp={settings.whatsapp}
+        upwork={settings.upwork}
+        socials={{
+          facebook: settings.socialFacebook,
+          instagram: settings.socialInstagram,
+          linkedin: settings.socialLinkedin,
+          x: settings.socialTwitter,
+          youtube: settings.socialYoutube,
+          tiktok: settings.socialTiktok,
+          github: settings.socialGithub,
+        }}
       />
 
       {/*

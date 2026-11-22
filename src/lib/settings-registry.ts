@@ -61,6 +61,15 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     help: "The eyebrow line above the hero heading.",
   },
   {
+    key: "site.role",
+    label: "Role / job title",
+    kind: "text",
+    group: "Identity",
+    default: "Digital Marketer & Creative Strategist",
+    maxLength: 120,
+    help: "Shown under your name in the footer.",
+  },
+  {
     key: "site.description",
     label: "Site description",
     kind: "textarea",
@@ -209,6 +218,93 @@ export const SETTING_DEFINITIONS: readonly SettingDefinition[] = [
     default: "Crafted with care.",
     maxLength: 160,
     help: "Appears after the copyright line.",
+  },
+  {
+    key: "footer.bio",
+    label: "Footer bio",
+    kind: "textarea",
+    group: "Footer",
+    default:
+      "Digital marketing, SEO, design and WordPress — one growth system, built around your business.",
+    maxLength: 320,
+    help: "The short paragraph under your name in the footer.",
+  },
+  {
+    key: "footer.location",
+    label: "Availability line",
+    kind: "text",
+    group: "Footer",
+    default: "Serving clients worldwide",
+    maxLength: 80,
+    help: "Shown with a pin icon in the Get in touch column.",
+  },
+  {
+    key: "footer.ctaLabel",
+    label: "Footer button label",
+    kind: "text",
+    group: "Footer",
+    default: "Book a free discovery call",
+    maxLength: 60,
+    help: "Leave the label or the link empty to hide the button.",
+  },
+  {
+    key: "footer.ctaHref",
+    label: "Footer button link",
+    kind: "text",
+    group: "Footer",
+    default: "/contact",
+    maxLength: 300,
+    help: "An internal path like /contact, or a full https:// URL.",
+  },
+  {
+    key: "site.socialInstagram",
+    label: "Instagram URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+    help: "Leave empty to hide the icon.",
+  },
+  {
+    key: "site.socialFacebook",
+    label: "Facebook URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+  },
+  {
+    key: "site.socialYoutube",
+    label: "YouTube URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+  },
+  {
+    key: "site.socialTiktok",
+    label: "TikTok URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+  },
+  {
+    key: "site.whatsapp",
+    label: "WhatsApp link",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
+    help: "A wa.me link, e.g. https://wa.me/8801XXXXXXXXX.",
+  },
+  {
+    key: "site.upwork",
+    label: "Upwork profile URL",
+    kind: "text",
+    group: "Footer",
+    default: "",
+    maxLength: 300,
   },
   {
     key: "email.fromName",
@@ -372,6 +468,7 @@ export type SiteSettings = {
   name: string;
   shortName: string;
   tagline: string;
+  role: string;
   description: string;
   logo: string;
   favicon: string;
@@ -388,7 +485,17 @@ export type SiteSettings = {
   socialLinkedin: string;
   socialGithub: string;
   socialTwitter: string;
+  socialInstagram: string;
+  socialFacebook: string;
+  socialYoutube: string;
+  socialTiktok: string;
+  whatsapp: string;
+  upwork: string;
   footerText: string;
+  footerBio: string;
+  footerLocation: string;
+  footerCtaLabel: string;
+  footerCtaHref: string;
   emailFromName: string;
   emailFromAddress: string;
   gtmId: string;
@@ -412,6 +519,7 @@ export const SETTING_FIELD_NAMES: Record<string, keyof SiteSettings> = {
   "site.name": "name",
   "site.shortName": "shortName",
   "site.tagline": "tagline",
+  "site.role": "role",
   "site.description": "description",
   "site.logo": "logo",
   "site.favicon": "favicon",
@@ -428,7 +536,17 @@ export const SETTING_FIELD_NAMES: Record<string, keyof SiteSettings> = {
   "site.socialLinkedin": "socialLinkedin",
   "site.socialGithub": "socialGithub",
   "site.socialTwitter": "socialTwitter",
+  "site.socialInstagram": "socialInstagram",
+  "site.socialFacebook": "socialFacebook",
+  "site.socialYoutube": "socialYoutube",
+  "site.socialTiktok": "socialTiktok",
+  "site.whatsapp": "whatsapp",
+  "site.upwork": "upwork",
   "footer.text": "footerText",
+  "footer.bio": "footerBio",
+  "footer.location": "footerLocation",
+  "footer.ctaLabel": "footerCtaLabel",
+  "footer.ctaHref": "footerCtaHref",
   "email.fromName": "emailFromName",
   "email.fromAddress": "emailFromAddress",
   "analytics.gtmId": "gtmId",
