@@ -22,8 +22,8 @@ import {
 /**
  * Site footer.
  *
- * Four columns on desktop, stacked on mobile: brand and socials, pages,
- * services, and the contact block with the primary call to action. Everything
+ * Four columns on desktop, two columns on mobile: brand and contact block span
+ * the full width, with pages and services side by side between them. Everything
  * is driven by settings, so the owner edits copy and links in the admin panel
  * rather than in code.
  *
@@ -110,9 +110,9 @@ export function Footer(props: FooterProps) {
   return (
     <footer className="mt-auto bg-violet-950 text-white">
       <div className="wrap py-12 lg:py-[62px]">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_0.9fr_1.15fr_1.25fr] lg:gap-9">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-9 md:gap-10 lg:grid-cols-[1.5fr_0.9fr_1.15fr_1.25fr] lg:gap-9">
           {/* ---------------------------------------------------- brand --- */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-3.5">
               {props.logoUrl ? (
                 <Image
@@ -211,7 +211,7 @@ export function Footer(props: FooterProps) {
           </nav>
 
           {/* ---------------------------------------------- get in touch --- */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h2 className="mb-4 font-display text-[15px] font-extrabold tracking-[-0.01em] text-white">
               Get in touch
             </h2>
